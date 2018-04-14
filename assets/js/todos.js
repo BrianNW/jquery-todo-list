@@ -1,11 +1,11 @@
 
-/* Check off specific todos by clicking */
-$("li").click(function() {
+/* Check off specific todos by clicking. Use on instead of click for all future child li's */
+$("ul").on("click", "li", function() {
 	$(this).toggleClass("completed");
 }); 
 
-/* Click on x to delete Todo */
-$("span").click(function(event) {
+/* Create an event object. First fire off when you click on x to delete Todo */
+$("ul").on("click", "span", function(event) {
 	
 	/* gives parent element as jquery element. Will give us li and remove entire li */
 	$(this).parent().fadeOut(500, function() {
@@ -13,6 +13,20 @@ $("span").click(function(event) {
 	});
 	/* stops event from bubbling up */
 	event.stopPropagation();	
+});
+
+/* Initiate event object */
+$("input[type='text']").keypress(function(event) {
+	
+	/* Check for the Enter key keycode */
+	if(event.which === 13) {
+		/* grabbing new todo text from input */
+		var todoText = $(this).val();
+		/* set an empty input */
+		$(this).val("");
+		/* select ul, create new li and add to ul */
+		$("ul").append("<li><span>X</span> " + todoText + "</li");
+	}
 });
 
 
